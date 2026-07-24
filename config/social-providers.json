@@ -1,0 +1,84 @@
+{
+  "providers": [
+    {
+      "id": "google",
+      "name": "Google",
+      "icon": "🔍",
+      "authUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+      "tokenUrl": "https://oauth2.googleapis.com/token",
+      "scope": "openid profile email"
+    },
+    {
+      "id": "yandex",
+      "name": "Yandex",
+      "icon": "🟡",
+      "authUrl": "https://oauth.yandex.com/authorize",
+      "tokenUrl": "https://oauth.yandex.com/token",
+      "scope": "login:email login:info"
+    },
+    {
+      "id": "vk",
+      "name": "VK.com",
+      "icon": "💙",
+      "authUrl": "https://oauth.vk.com/authorize",
+      "tokenUrl": "https://oauth.vk.com/access_token",
+      "scope": "email"
+    },
+    {
+      "id": "twitter",
+      "name": "X (Twitter)",
+      "icon": "𝕏",
+      "authUrl": "https://twitter.com/i/oauth2/authorize",
+      "tokenUrl": "https://twitter.com/2/oauth2/token",
+      "scope": "tweet.read users.read"
+    },
+    {
+      "id": "apple",
+      "name": "Apple",
+      "icon": "🍎",
+      "authUrl": "https://appleid.apple.com/auth/authorize",
+      "tokenUrl": "https://appleid.apple.com/auth/token",
+      "scope": "openid email name"
+    },
+    {
+      "id": "microsoft",
+      "name": "Microsoft",
+      "icon": "💻",
+      "authUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+      "tokenUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+      "scope": "openid profile email"
+    },
+    {
+      "id": "wechat",
+      "name": "WeChat",
+      "icon": "💬",
+      "authUrl": "https://open.weixin.qq.com/connect/oauth2/authorize",
+      "tokenUrl": "https://api.weixin.qq.com/sns/oauth2/access_token",
+      "scope": "snsapi_login"
+    },
+    {
+      "id": "qq",
+      "name": "QQ",
+      "icon": "🐧",
+      "authUrl": "https://graph.qq.com/oauth2.0/authorize",
+      "tokenUrl": "https://graph.qq.com/oauth2.0/token",
+      "scope": "get_user_info"
+    },
+    {
+      "id": "instagram",
+      "name": "Instagram",
+      "icon": "📷",
+      "authUrl": "https://api.instagram.com/oauth/authorize",
+      "tokenUrl": "https://graph.instagram.com/v12.0/access_token",
+      "scope": "user_profile,user_media"
+    },
+    {
+      "id": "facebook",
+      "name": "Facebook",
+      "icon": "f",
+      "authUrl": "https://www.facebook.com/v12.0/dialog/oauth",
+      "tokenUrl": "https://graph.facebook.com/v12.0/oauth/access_token",
+      "scope": "public_profile,email"
+    }
+  ]
+}

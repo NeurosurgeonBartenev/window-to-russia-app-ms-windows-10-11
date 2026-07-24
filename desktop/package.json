@@ -1,0 +1,51 @@
+{
+  "name": "window-to-russia-desktop",
+  "version": "0.1.0",
+  "description": "Window to RUSSIA - Desktop Application",
+  "main": "dist/main.js",
+  "homepage": "./",
+  "build": {
+    "appId": "com.windowtorussia.app",
+    "productName": "Window to RUSSIA",
+    "directories": {
+      "buildResources": "assets",
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*"
+    ],
+    "win": {
+      "target": [
+        "msix",
+        "nsis"
+      ],
+      "certificateFile": null,
+      "certificatePassword": null
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --develop",
+    "build": "tsc && electron-builder",
+    "build-only": "electron-builder",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "axios": "^1.5.0",
+    "node-cron": "^3.0.2",
+    "sharp": "^0.32.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.0",
+    "electron": "^26.0.0",
+    "electron-builder": "^24.6.4",
+    "typescript": "^5.1.6"
+  }
+}

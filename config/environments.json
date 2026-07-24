@@ -1,0 +1,19 @@
+{
+  "environments": {
+    "development": {
+      "apiUrl": "http://localhost:8000/api/v1",
+      "corsOrigin": "localhost:5173",
+      "debug": true
+    },
+    "staging": {
+      "apiUrl": "https://staging-api.windowtorussia.com/api/v1",
+      "corsOrigin": "staging.windowtorussia.com",
+      "debug": false
+    },
+    "production": {
+      "apiUrl": "https://api.windowtorussia.com/api/v1",
+      "corsOrigin": "windowtorussia.com",
+      "debug": false
+    }
+  }
+}
