@@ -1,51 +1,39 @@
 {
   "name": "window-to-russia-desktop",
   "version": "0.1.0",
-  "description": "Window to RUSSIA - Desktop Application",
-  "main": "dist/main.js",
-  "homepage": "./",
-  "build": {
-    "appId": "com.windowtorussia.app",
-    "productName": "Window to RUSSIA",
-    "directories": {
-      "buildResources": "assets",
-      "output": "release"
-    },
-    "files": [
-      "dist/**/*",
-      "node_modules/**/*"
-    ],
-    "win": {
-      "target": [
-        "msix",
-        "nsis"
-      ],
-      "certificateFile": null,
-      "certificatePassword": null
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true
-    }
-  },
+  "description": "Window to RUSSIA - Desktop Application for Windows 10/11",
+  "main": ".webpack/main",
+  "preload": ".webpack/preload",
   "scripts": {
-    "start": "electron .",
-    "dev": "electron . --develop",
-    "build": "tsc && electron-builder",
-    "build-only": "electron-builder",
-    "type-check": "tsc --noEmit"
+    "dev": "concurrently \"npm:dev:react\" \"npm:dev:electron\"",
+    "dev:react": "vite",
+    "dev:electron": "electron-forge start",
+    "build": "tsc && vite build",
+    "build:electron": "tsc && vite build && electron-forge make",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish"
   },
   "dependencies": {
-    "axios": "^1.5.0",
-    "node-cron": "^3.0.2",
-    "sharp": "^0.32.6"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.16.0",
+    "axios": "^1.5.0"
   },
   "devDependencies": {
-    "@types/node": "^20.5.0",
-    "electron": "^26.0.0",
-    "electron-builder": "^24.6.4",
-    "typescript": "^5.1.6"
+    "@electron-forge/cli": "^7.0.0",
+    "@electron-forge/maker-squirrel": "^7.0.0",
+    "@electron-forge/maker-zip": "^7.0.0",
+    "@electron-forge/maker-deb": "^7.0.0",
+    "@electron-forge/plugin-webpack": "^7.0.0",
+    "@types/electron": "^1.6.10",
+    "@types/react": "^18.2.15",
+    "@vitejs/plugin-react": "^4.0.3",
+    "electron": "^25.0.0",
+    "electron-builder": "^24.6.0",
+    "electron-is-dev": "^2.0.0",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.9",
+    "concurrently": "^8.2.0"
   }
 }
