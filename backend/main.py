@@ -14,6 +14,7 @@ from fastapi.responses import JSONResponse
 
 from src.config.settings import settings
 from src.database.database import Base, engine
+from src.routes import auth, users, themes, wallpapers, favorites
 
 # Configure logging
 logging.basicConfig(
@@ -49,7 +50,7 @@ async def lifespan(app: FastAPI):
 # Create FastAPI application
 app = FastAPI(
     title=settings.APP_NAME,
-    description="API for Window to RUSSIA wallpaper application",
+    description="API for Window to RUSSIA wallpaper application - Daily themes showcasing Russian culture, regions, and heritage",
     version=settings.APP_VERSION,
     lifespan=lifespan,
     docs_url="/api/docs",
@@ -95,19 +96,46 @@ async def root() -> JSONResponse:
             "name": settings.APP_NAME,
             "version": settings.APP_VERSION,
             "description": "Window to RUSSIA - Wallpaper Application API",
-            "docs": "/api/docs",
-            "redoc": "/api/redoc",
-            "health": "/health"
+            "endpoints": {
+                "documentation": "/api/docs",
+                "redoc": "/api/redoc",
+                "openapi": "/api/openapi.json",
+                "health": "/health"
+            }
         }
     )
 
 
-# API v1 routes (will be added)
-# @app.include_router(auth_router, prefix="/api/v1/auth", tags=["auth"])
-# @app.include_router(users_router, prefix="/api/v1/users", tags=["users"])
-# @app.include_router(themes_router, prefix="/api/v1/themes", tags=["themes"])
-# @app.include_router(wallpapers_router, prefix="/api/v1/wallpapers", tags=["wallpapers"])
-# @app.include_router(favorites_router, prefix="/api/v1/favorites", tags=["favorites"])
+# Include all routers
+app.include_router(
+    auth.router,
+    prefix="/api/v1/auth",
+    responses={401: {"description": "Unauthorized"}}
+)
+
+app.include_router(
+    users.router,
+    prefix="/api/v1/users",
+    responses={401: {"description": "Unauthorized"}, 404: {"description": "Not found"}}
+)
+
+app.include_router(
+    themes.router,
+    prefix="/api/v1/themes",
+    responses={404: {"description": "Theme not found"}}
+)
+
+app.include_router(
+    wallpapers.router,
+    prefix="/api/v1/wallpapers",
+    responses={404: {"description": "Wallpaper not found"}}
+)
+
+app.include_router(
+    favorites.router,
+    prefix="/api/v1/favorites",
+    responses={401: {"description": "Unauthorized"}, 404: {"description": "Not found"}}
+)
 
 
 @app.exception_handler(Exception)
@@ -118,7 +146,10 @@ async def general_exception_handler(request, exc):
     logger.error(f"Unhandled exception: {str(exc)}", exc_info=True)
     return JSONResponse(
         status_code=500,
-        content={"detail": "Internal server error", "error": str(exc) if settings.DEBUG else None}
+        content={
+            "detail": "Internal server error",
+            "error": str(exc) if settings.DEBUG else None
+        }
     )
 
 
