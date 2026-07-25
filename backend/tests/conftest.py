@@ -1,21 +1,49 @@
+"""
+Pytest configuration and fixtures
+"""
+
 import pytest
-from httpx import AsyncClient
-from fastapi.testclient import TestClient
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
-from config.database import Base
-import sys
-import os
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+from src.config.settings import Settings
+from src.database.database import Base
 
-from main import app
 
 @pytest.fixture
-async def async_client():
-    async with AsyncClient(app=app, base_url="http://test") as client:
-        yield client
+async def test_db():
+    """
+    Create in-memory SQLite database for testing
+    """
+    # Use SQLite for testing
+    engine = create_async_engine(
+        "sqlite+aiosqlite:///:memory:",
+        echo=False,
+    )
+    
+    # Create tables
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    
+    # Create session factory
+    async_session = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+    
+    yield async_session
+    
+    # Cleanup
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+    
+    await engine.dispose()
+
 
 @pytest.fixture
-scope="session"
-def client():
-    return TestClient(app)
+def test_settings():
+    """
+    Override settings for testing
+    """
+    return Settings(
+        DEBUG=True,
+        ENVIRONMENT="test",
+        DATABASE_URL="sqlite+aiosqlite:///:memory:",
+        SECRET_KEY="test-secret-key",
+    )
